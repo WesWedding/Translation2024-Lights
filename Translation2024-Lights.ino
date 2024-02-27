@@ -20,6 +20,18 @@ Timeline state1;
 Timeline state2;
 Timeline state3;
 
+// Define the "areas" on the strip that have specific animations.
+#define STRIP_SEG1_START 0
+#define STRIP_SEG1_END 5
+#define STRIP_SEG2_START 7
+#define STRIP_SEG2_END 12
+
+#include "StripSegments.h"
+strip_segments stripSegments;
+
+#include "IdleAnim.h"
+IdleAnim idleAnim(strip, stripSegments);
+
 float ledPosition = 1;
 
 void setup() {
@@ -29,6 +41,11 @@ void setup() {
   strip.begin(); 
   strip.show();
   strip.setBrightness(BRIGHTNESS);
+
+  stripSegments.firstArea.first = STRIP_SEG1_START;
+  stripSegments.firstArea.last = STRIP_SEG1_END;
+  stripSegments.secondArea.first = STRIP_SEG2_START;
+  stripSegments.secondArea.last = STRIP_SEG2_END;
 
   state1.addTo(ledPosition, LED_COUNT, 3000);
   state2.addTo(ledPosition, LED_COUNT, 10000);
@@ -78,6 +95,7 @@ void loop() {
   switch(touchState) {
     case '0':
       currentTl = &state1;
+      idleAnim.start();
       doBehavior = doStage0Behavior;
       break;
     case '1':
@@ -99,9 +117,7 @@ void loop() {
 }
 
 void doStage0Behavior() {
-  strip.clear();
-  strip.setPixelColor(ledPosition, strip.Color(200, 200, 200));
-  strip.show();
+  idleAnim.update();
 }
 
 void doStage1Behavior() {
