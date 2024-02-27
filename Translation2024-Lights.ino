@@ -39,12 +39,12 @@ void setup() {
 // Variables relevant to the loop.  Nice to have them down here, nearer the logic they're used in.
 bool stateChanged = false;
 char touchState;
-Timeline &currentTl = state1;
+Timeline *currentTl = &state1;
 void (*doBehavior)(void) = doStage0Behavior;
 
 void loop() {
   unsigned long int now = millis();
-  currentTl.update(now);
+  currentTl->update(now);
   using periodic = esp8266::polledTimeout::periodicMs;
   static periodic nextPing(100);
 
@@ -77,15 +77,15 @@ void loop() {
 
   switch(touchState) {
     case '0':
-      currentTl = state1;
+      currentTl = &state1;
       doBehavior = doStage0Behavior;
       break;
     case '1':
-      currentTl = state2;
+      currentTl = &state2;
       doBehavior = doStage1Behavior;
       break;
     case '2':
-      currentTl = state3;
+      currentTl = &state3;
       doBehavior = doStage2Behavior;
       break;
     default:
@@ -94,7 +94,7 @@ void loop() {
   }
   stateChanged = false;
   ledPosition = 1;
-  currentTl.restartFrom(now);
+  currentTl->restartFrom(now);
   doBehavior();
 }
 
