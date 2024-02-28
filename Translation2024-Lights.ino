@@ -7,9 +7,9 @@ const int16_t I2C_TOUCH_ADDR = 0x8C;
 #define SCL_PIN 5
 
 #include <Adafruit_NeoPixel.h>
-#define LED_PIN     12
+#define LED_PIN    12
 #define LED_COUNT  16
-#define BRIGHTNESS 50
+#define BRIGHTNESS 100
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_RGB + NEO_KHZ800);
 
 
@@ -22,15 +22,19 @@ Timeline state3;
 
 // Define the "areas" on the strip that have specific animations.
 #define STRIP_SEG1_START 0
-#define STRIP_SEG1_END 5
+#define STRIP_SEG1_END   5
 #define STRIP_SEG2_START 7
-#define STRIP_SEG2_END 12
+#define STRIP_SEG2_END   12
 
 #include "StripSegments.h"
 strip_segments stripSegments;
 
 #include "IdleAnim.h"
+#include "TouchedAnim.h"
+#include "ClearAnimation.h"
 IdleAnim idleAnim(strip, stripSegments);
+TouchedAnim touchedAnim(strip, stripSegments);
+ClearAnimation clearAnim(strip, stripSegments);
 
 float ledPosition = 1;
 
@@ -95,15 +99,23 @@ void loop() {
   switch(touchState) {
     case '0':
       currentTl = &state1;
+      touchedAnim.stop();
+      clearAnim.stop();
       idleAnim.start();
       doBehavior = doStage0Behavior;
       break;
     case '1':
       currentTl = &state2;
+      idleAnim.stop();
+      clearAnim.stop();
+      touchedAnim.start();
       doBehavior = doStage1Behavior;
       break;
     case '2':
       currentTl = &state3;
+      idleAnim.stop();
+      touchedAnim.stop();
+      clearAnim.start();
       doBehavior = doStage2Behavior;
       break;
     default:
@@ -121,14 +133,9 @@ void doStage0Behavior() {
 }
 
 void doStage1Behavior() {
-  strip.clear();
-  strip.setPixelColor(ledPosition, strip.Color(200, 200, 200));
-  strip.show();
+  touchedAnim.update();
 }
 
 void doStage2Behavior() {
-  strip.clear();
-  strip.setPixelColor(ledPosition, strip.Color(200, 200, 200));
-  strip.show();
+  clearAnim.update();
 }
-
