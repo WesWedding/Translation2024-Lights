@@ -1,13 +1,23 @@
 #include "TouchedAnim.h"
 
-TouchedAnim::TouchedAnim(Adafruit_NeoPixel &strip, strip_segments &segments): strip(strip), segments(segments), fadeTl(), moveTl(), brightness(0), position(0) {
-  fadeTl.addTo(brightness, 1.0, 23, TweenDuino::Tween::SINE, TweenDuino::Tween::INOUT);
-  fadeTl.addTo(brightness, 0.0, 23, TweenDuino::Tween::SINE, TweenDuino::Tween::INOUT);
+#define LOWEST_BRIGHTNESS  0.4
+
+TouchedAnim::TouchedAnim(Adafruit_NeoPixel &strip, strip_segments &segments): strip(strip), segments(segments), brightnessTl(), moveTl(), brightness(LOWEST_BRIGHTNESS), position(segments.firstArea.first) {
+
+// 463ms length from crest to crest
+  brightnessTl.addTo(brightness, 1.0, 375, TweenDuino::Tween::SINE, TweenDuino::Tween::IN);
+  brightnessTl.addTo(brightness, LOWEST_BRIGHTNESS, 88, TweenDuino::Tween::SINE, TweenDuino::Tween::INOUT);
+    
+  moveTl.addTo(position, segments.secondArea.last, 375, TweenDuino::Tween::SINE, TweenDuino::Tween::IN);
+  moveTl.addTo(position, segments.secondArea.last, 88);  // Stay full during fade out.
 }
 
 void TouchedAnim::start() {
   running = true;
-  fadeTl.restartFrom(millis());
+  brightness = LOWEST_BRIGHTNESS;
+  position = segments.firstArea.first;
+  brightnessTl.restartFrom(millis());
+  moveTl.restartFrom(millis());
 }
 
 void TouchedAnim::stop() {
@@ -17,17 +27,28 @@ void TouchedAnim::stop() {
 void TouchedAnim::update() {
   if (!running) return;
 
-  fadeTl.update(millis());
+  brightnessTl.update(millis());
+  moveTl.update(millis());
+
+  Serial.println(position);
+  Serial.print("To: ");
+  Serial.println(segments.secondArea.last);
 
   strip.clear();
-  for (int i = segments.firstArea.first; i <= segments.secondArea.last; i++) {
-    uint32_t color = strip.Color(100 * brightness, 200 * brightness, 103 * brightness);
+
+  for (int i = segments.firstArea.first; i < segments.secondArea.last; i++) {
+    const float magnitude = (i <= position) ? brightness : LOWEST_BRIGHTNESS;
+    uint32_t color = strip.Color(255 * magnitude, 255 * magnitude, 255 * magnitude);
     strip.setPixelColor(i, strip.gamma32(color));
   }
 
   strip.show();
 
-  if (fadeTl.isComplete()) {
-    fadeTl.restartFrom(millis());
+  if (brightnessTl.isComplete()) {
+    brightnessTl.restartFrom(millis());
+  }
+  if (moveTl.isComplete()) {
+    position = segments.firstArea.first;
+    moveTl.restartFrom(millis());
   }
 }

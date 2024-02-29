@@ -18,10 +18,10 @@ class TouchedAnim {
     bool running;
     Adafruit_NeoPixel &strip;
     const strip_segments& segments;
-    Timeline fadeTl;
+    Timeline brightnessTl;
     Timeline moveTl;
     float brightness;
-    int position;
+    float position;
 };
 
 #endif
