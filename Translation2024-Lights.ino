@@ -27,7 +27,10 @@ Timeline state3;
 #define STRIP_SEG2_END   12
 
 #include "StripSegments.h"
-strip_segments stripSegments;
+strip_segments stripSegments = {
+  { STRIP_SEG1_START, STRIP_SEG1_END },
+  { STRIP_SEG2_START, STRIP_SEG2_END },
+};
 
 #include "IdleAnim.h"
 #include "TouchedAnim.h"
@@ -45,12 +48,6 @@ void setup() {
   strip.begin(); 
   strip.show();
   strip.setBrightness(BRIGHTNESS);
-
-  stripSegments.firstArea.first = STRIP_SEG1_START;
-  stripSegments.firstArea.last = STRIP_SEG1_END;
-  stripSegments.secondArea.first = STRIP_SEG2_START;
-  stripSegments.secondArea.last = STRIP_SEG2_END;
-
   state1.addTo(ledPosition, LED_COUNT, 3000);
   state2.addTo(ledPosition, LED_COUNT, 10000);
   state3.addTo(ledPosition, LED_COUNT, 20000);
