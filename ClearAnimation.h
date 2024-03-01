@@ -16,11 +16,6 @@ class ClearAnimation {
     bool running;
     Adafruit_NeoPixel &strip;
     const strip_segments& segments;
-    Timeline initialFlicker;
-    Timeline rumbleFlicker;
-    Timeline rumbleMove;
-    float brightness;
-    float rumbleModification;
     Timeline splotch1RTl;
     Timeline splotch1GTl;
     Timeline splotch1BTl;
@@ -29,7 +24,6 @@ class ClearAnimation {
     Timeline splotch2GTl;
     Timeline splotch2BTl;
     float splotch2[3];
-    int position;
 };
 
 #endif
