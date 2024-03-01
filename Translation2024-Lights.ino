@@ -10,7 +10,7 @@ const int16_t I2C_TOUCH_ADDR = 0x8C;
 #define LED_PIN    12
 #define LED_COUNT  16
 #define BRIGHTNESS 100
-Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_RGB + NEO_KHZ800);
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 
 #include <TweenDuino.h>
