@@ -28,6 +28,10 @@ class ClearAnimation {
     float blipOddsBrightness;
     Timeline blipEvens;
     Timeline blipOdds;
+    unsigned long blipEvenLast;
+    unsigned long blipOddLast;
+    unsigned long blipEvenNext;
+    unsigned long blipOddNext;
     float thunderBrightness;
     Timeline thunder;
     float fadeBrightness;

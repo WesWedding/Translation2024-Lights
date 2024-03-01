@@ -2,7 +2,7 @@
 #include <math.h>
 
 
-#define BASELINE_MAG 80
+#define BASELINE_MAG 70
 #define COLOR1R_INIT BASELINE_MAG
 #define COLOR1G_INIT BASELINE_MAG
 #define COLOR1B_INIT BASELINE_MAG
@@ -36,6 +36,10 @@ ClearAnimation::ClearAnimation(Adafruit_NeoPixel &strip, strip_segments &segment
                               blipOddsBrightness(0.0),
                               blipEvens(),
                               blipOdds(),
+                              blipEvenLast(0),
+                              blipOddLast(0),
+                              blipEvenNext(0),
+                              blipOddNext(0),
                               thunderBrightness(1.0),
                               thunder(),
                               fadeBrightness(1.0),
@@ -60,25 +64,11 @@ ClearAnimation::ClearAnimation(Adafruit_NeoPixel &strip, strip_segments &segment
   splotch2GTl.addTo(splotch2[1], 54.3 * 3, 5000);
   splotch2BTl.addTo(splotch2[2], 33.7 * 3, 5000);
 
-  blipEvens.addTo(blipEvensBrightness, 1, 186); // Hold steady
-  blipEvens.addTo(blipEvensBrightness, 1.75, 35);
-  blipEvens.addTo(blipEvensBrightness, 1, 100);
-  blipEvens.addTo(blipEvensBrightness, 1, 65); // Hold steady
-  blipEvens.addTo(blipEvensBrightness, 1.75, 35);
-  blipEvens.addTo(blipEvensBrightness, 1, 100);
-  blipEvens.addTo(blipEvensBrightness, 1, 111); // Hold steady
-  blipEvens.addTo(blipEvensBrightness, 1.75, 35);
-  blipEvens.addTo(blipEvensBrightness, 1, 100);
+  blipEvens.addTo(blipEvensBrightness, 1.75, 35, Tween::SINE, Tween::INOUT);
+  blipEvens.addTo(blipEvensBrightness, 1, 100, Tween::SINE, Tween::INOUT);
 
-  blipOdds.addTo(blipOddsBrightness, 1, 92); // Hold steady for an amount different than evens to appear random
-  blipOdds.addTo(blipOddsBrightness, 1.75, 35);
-  blipOdds.addTo(blipOddsBrightness, 1, 100);
-  blipOdds.addTo(blipOddsBrightness, 1, 231); // Hold steady for an amount different than evens to appear random
-  blipOdds.addTo(blipOddsBrightness, 1.75, 35);
-  blipOdds.addTo(blipOddsBrightness, 1, 100);
-  blipOdds.addTo(blipOddsBrightness, 1, 70); // Hold steady for an amount different than evens to appear random
-  blipOdds.addTo(blipOddsBrightness, 1.75, 35);
-  blipOdds.addTo(blipOddsBrightness, 1, 100);
+  blipOdds.addTo(blipOddsBrightness, 1.75, 35, Tween::SINE, Tween::INOUT);
+  blipOdds.addTo(blipOddsBrightness, 1, 100, Tween::SINE, Tween::INOUT);
 
   thunder.addTo(thunderBrightness, 1.0, FIRST_RUMBLE_START);  // Don't visually "thunder" for a while
   thunder.addTo(thunderBrightness, 1.5, 975);
@@ -116,8 +106,10 @@ void ClearAnimation::start() {
 
   blipEvensBrightness = 1.0;
   blipOddsBrightness = 1.0;
-  blipEvens.restartFrom(millis());
-  blipOdds.restartFrom(millis());
+  blipEvenNext = millis() + random(50, 750);
+  blipOddNext = millis() + random(50, 750);
+  blipEvenLast = millis();
+  blipOddLast = millis();
 
   thunderBrightness = 1.0;
   thunder.restartFrom(millis());
@@ -133,21 +125,32 @@ void ClearAnimation::stop() {
 void ClearAnimation::update() {
   if (!running) return;
 
-  splotch1RTl.update(millis());
-  splotch1GTl.update(millis());
-  splotch1BTl.update(millis());
+  const unsigned long now = millis();
 
-  splotch2RTl.update(millis());
-  splotch2GTl.update(millis());
-  splotch2BTl.update(millis());
+  splotch1RTl.update(now);
+  splotch1GTl.update(now);
+  splotch1BTl.update(now);
 
+  splotch2RTl.update(now);
+  splotch2GTl.update(now);
+  splotch2BTl.update(now);
 
-  blipEvens.update(millis());
-  blipOdds.update(millis());
+  if (now >= blipEvenNext) {
+    blipEvens.restartFrom(now);
+    blipEvenLast = now;
+    blipEvenNext = now + random(50, 750);
+  }
+  if (now >= blipOddNext) {
+    blipOdds.restartFrom(now);
+    blipOddLast = now;
+    blipOddNext = now + random(50, 750);
+  }
+  blipEvens.update(now);
+  blipOdds.update(now);
 
-  thunder.update(millis());
+  thunder.update(now);
 
-  fadeOut.update(millis());
+  fadeOut.update(now);
 
   strip.clear();
 
@@ -186,12 +189,4 @@ void ClearAnimation::update() {
   }
 
   strip.show();
-
-  if (blipEvens.isComplete()) {
-    blipEvens.restartFrom(millis());
-  }
-  
-  if (blipOdds.isComplete()) {
-    blipOdds.restartFrom(millis());
-  }
 }
