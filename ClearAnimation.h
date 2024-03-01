@@ -24,6 +24,14 @@ class ClearAnimation {
     Timeline splotch2GTl;
     Timeline splotch2BTl;
     float splotch2[3];
+    float blipEvensBrightness;
+    float blipOddsBrightness;
+    Timeline blipEvens;
+    Timeline blipOdds;
+    float thunderBrightness;
+    Timeline thunder;
+    float fadeBrightness;
+    Timeline fadeOut;
 };
 
 #endif
