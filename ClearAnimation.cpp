@@ -15,7 +15,7 @@
 #define COLOR1G 31.2
 #define COLOR1B 36.6
 
-#define FIRST_RUMBLE_START 22698
+#define FIRST_RUMBLE_START 22427
 
 #define SECOND_RUMBLE_START 34724
 
@@ -70,15 +70,15 @@ ClearAnimation::ClearAnimation(Adafruit_NeoPixel &strip, strip_segments &segment
   blipOdds.addTo(blipOddsBrightness, 1.75, 35, Tween::SINE, Tween::INOUT);
   blipOdds.addTo(blipOddsBrightness, 1, 100, Tween::SINE, Tween::INOUT);
 
-  thunder.addTo(thunderBrightness, 1.0, FIRST_RUMBLE_START);  // Don't visually "thunder" for a while
-  thunder.addTo(thunderBrightness, 1.5, 975);
-  thunder.addTo(thunderBrightness, 1.0, 300);
-  thunder.addTo(thunderBrightness, 1.0, SECOND_RUMBLE_START - 975 - 300 - FIRST_RUMBLE_START);
-  thunder.addTo(thunderBrightness, 1.5, 1246);
-  thunder.addTo(thunderBrightness, 1.25, 813);
-  thunder.addTo(thunderBrightness, 2.0, 704);
-  thunder.addTo(thunderBrightness, 2.0, 500);
-  thunder.addTo(thunderBrightness, 1.0, 1000);
+  thunder.addTo(thunderBrightness, 1.0, FIRST_RUMBLE_START, Tween::SINE, Tween::INOUT);  // Don't visually "thunder" for a while
+  thunder.addTo(thunderBrightness, 1.5, 200, Tween::SINE, Tween::INOUT);
+  thunder.addTo(thunderBrightness, 1.0, 900, Tween::SINE, Tween::INOUT);
+  thunder.addTo(thunderBrightness, 1.0, SECOND_RUMBLE_START - 200 - 900 - FIRST_RUMBLE_START, Tween::SINE, Tween::INOUT);
+  thunder.addTo(thunderBrightness, 2.0, 646, Tween::SINE, Tween::INOUT);
+  thunder.addTo(thunderBrightness, 1.5, 1413, Tween::SINE, Tween::INOUT);
+  thunder.addTo(thunderBrightness, 2.0, 704, Tween::SINE, Tween::INOUT);
+  thunder.addTo(thunderBrightness, 3.0, 500, Tween::SINE, Tween::INOUT);
+  thunder.addTo(thunderBrightness, 1.0, 1000, Tween::SINE, Tween::INOUT);
 
   const int fadeDuration = 1000;
   fadeOut.addTo(fadeBrightness, 1.0, SOUND_DURATION - fadeDuration);
