@@ -21,7 +21,7 @@ void IdleAnim::update() {
 
   strip.clear();
   for (int i = segments.firstArea.first; i <= segments.firstArea.last; i++) {
-    uint32_t color = strip.Color(100 * brightness, 200 * brightness, 103 * brightness);
+    uint32_t color = strip.Color(255 * brightness, 255  * brightness, 255 * brightness);
     strip.setPixelColor(i, strip.gamma32(color));
   }
 
