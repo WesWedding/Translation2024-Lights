@@ -21,6 +21,14 @@ class ClearAnimation {
     Timeline rumbleMove;
     float brightness;
     float rumbleModification;
+    Timeline splotch1RTl;
+    Timeline splotch1GTl;
+    Timeline splotch1BTl;
+    float splotch1[3];
+    Timeline splotch2RTl;
+    Timeline splotch2GTl;
+    Timeline splotch2BTl;
+    float splotch2[3];
     int position;
 };
 
