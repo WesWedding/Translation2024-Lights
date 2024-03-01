@@ -46,23 +46,23 @@ ClearAnimation::ClearAnimation(Adafruit_NeoPixel &strip, strip_segments &segment
                               fadeOut() {
 
   // Don't change anything initially
-  splotch1RTl.addTo(splotch1[0], COLOR1R_INIT, 22806);
-  splotch1GTl.addTo(splotch1[1], COLOR1G_INIT, 22806);
-  splotch1BTl.addTo(splotch1[2], COLOR1B_INIT, 22806);
+  splotch1RTl.addTo(splotch1[0], COLOR1R_INIT, 22806, Tween::SINE, Tween::INOUT);
+  splotch1GTl.addTo(splotch1[1], COLOR1G_INIT, 22806, Tween::SINE, Tween::INOUT);
+  splotch1BTl.addTo(splotch1[2], COLOR1B_INIT, 22806, Tween::SINE, Tween::INOUT);
 
-  splotch2RTl.addTo(splotch2[0], COLOR1R_INIT, 22806);
-  splotch2GTl.addTo(splotch2[1], COLOR1G_INIT, 22806);
-  splotch2BTl.addTo(splotch2[2], COLOR1B_INIT, 22806);
+  splotch2RTl.addTo(splotch2[0], COLOR1R_INIT, 22806, Tween::SINE, Tween::INOUT);
+  splotch2GTl.addTo(splotch2[1], COLOR1G_INIT, 22806, Tween::SINE, Tween::INOUT);
+  splotch2BTl.addTo(splotch2[2], COLOR1B_INIT, 22806, Tween::SINE, Tween::INOUT);
 
   // blue splotch roughly rgb:  23.9, 31.2, 36.6
-  splotch1RTl.addTo(splotch1[0], 23.9 * 3, 5000);
-  splotch1GTl.addTo(splotch1[1], 31.2 * 3, 5000);
-  splotch1BTl.addTo(splotch1[2], 36.6 * 3, 5000);
+  splotch1RTl.addTo(splotch1[0], 23.9 * 3, 5000, Tween::SINE, Tween::INOUT);
+  splotch1GTl.addTo(splotch1[1], 31.2 * 3, 5000, Tween::SINE, Tween::INOUT);
+  splotch1BTl.addTo(splotch1[2], 36.6 * 3, 5000, Tween::SINE, Tween::INOUT);
 
   // yellow splotches roughly rgb: 62.4, 54.3, 33.7
-  splotch2RTl.addTo(splotch2[0], 62.4 * 3, 5000);
-  splotch2GTl.addTo(splotch2[1], 54.3 * 3, 5000);
-  splotch2BTl.addTo(splotch2[2], 33.7 * 3, 5000);
+  splotch2RTl.addTo(splotch2[0], 62.4 * 3, 5000, Tween::SINE, Tween::INOUT);
+  splotch2GTl.addTo(splotch2[1], 54.3 * 3, 5000, Tween::SINE, Tween::INOUT);
+  splotch2BTl.addTo(splotch2[2], 33.7 * 3, 5000, Tween::SINE, Tween::INOUT);
 
   blipEvens.addTo(blipEvensBrightness, 1.75, 35, Tween::SINE, Tween::INOUT);
   blipEvens.addTo(blipEvensBrightness, 1, 100, Tween::SINE, Tween::INOUT);
@@ -81,8 +81,8 @@ ClearAnimation::ClearAnimation(Adafruit_NeoPixel &strip, strip_segments &segment
   thunder.addTo(thunderBrightness, 1.0, 1000, Tween::SINE, Tween::INOUT);
 
   const int fadeDuration = 1000;
-  fadeOut.addTo(fadeBrightness, 1.0, SOUND_DURATION - fadeDuration);
-  fadeOut.addTo(fadeBrightness, 0.0, fadeDuration);
+  fadeOut.addTo(fadeBrightness, 1.0, SOUND_DURATION - fadeDuration, Tween::SINE, Tween::INOUT);
+  fadeOut.addTo(fadeBrightness, 0.0, fadeDuration, Tween::SINE, Tween::INOUT);
 }
 
 void ClearAnimation::start() {
