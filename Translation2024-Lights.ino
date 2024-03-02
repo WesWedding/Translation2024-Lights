@@ -1,3 +1,6 @@
+// Leave the next line commented out unless you are developing on a local environment, not using the final LED string.
+// #define DEV_ENV
+
 #include <Wire.h>
 #include <PolledTimeout.h>
 
@@ -8,7 +11,12 @@ const int16_t I2C_TOUCH_ADDR = 0x8C;
 
 #include <Adafruit_NeoPixel.h>
 #define LED_PIN    12
-#define LED_COUNT  16
+#if defined(DEV_ENV)
+  #define LED_COUNT  16
+#else
+  #define LED_COUNT 60
+#endif
+
 #define BRIGHTNESS 100
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
