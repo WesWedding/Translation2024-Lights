@@ -99,8 +99,6 @@ void loop() {
     return;
   }
 
-  Serial.print("New state: ");  Serial.print(touchState);  Serial.println();
-
   switch(touchState) {
     case '0':
       currentTl = &state1;
@@ -122,6 +120,11 @@ void loop() {
       touchedAnim.stop();
       clearAnim.start();
       doBehavior = doStage2Behavior;
+      break;
+    case '3':
+      idleAnim.stop();
+      touchedAnim.stop();
+      clearAnim.stop();
       break;
     default:
       Serial.println("Unrecongized state.");

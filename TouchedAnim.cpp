@@ -30,10 +30,6 @@ void TouchedAnim::update() {
   brightnessTl.update(millis());
   moveTl.update(millis());
 
-  Serial.println(position);
-  Serial.print("To: ");
-  Serial.println(segments.secondArea.last);
-
   strip.clear();
 
   for (int i = segments.firstArea.first; i < segments.secondArea.last; i++) {
