@@ -11,9 +11,13 @@
 #define COLOR2G_INIT BASELINE_MAG
 #define COLOR2B_INIT BASELINE_MAG
 
-#define COLOR1R 23.9
-#define COLOR1G 31.2
-#define COLOR1B 36.6
+#define BLUE_FROG_R 23.9
+#define BLUE_FROG_G 31.2
+#define BLUE_FROG_B 36.6
+
+#define YELLOW_FROG_R 62.4
+#define YELLOW_FROG_G 54.3
+#define YELLOW_FROG_B 33.7
 
 #define FIRST_RUMBLE_START 22427
 
@@ -24,18 +28,14 @@
 ClearAnimation::ClearAnimation(Adafruit_NeoPixel &strip, strip_segments &segments): 
                               strip(strip), 
                               segments(segments),
-                              splotch1RTl(),
-                              splotch1GTl(),
-                              splotch1BTl(),
                               splotch1{COLOR1R_INIT, COLOR1G_INIT, COLOR1B_INIT},
-                              splotch2RTl(),
-                              splotch2GTl(),
-                              splotch2BTl(),
                               splotch2{COLOR2R_INIT, COLOR2G_INIT, COLOR2B_INIT},
+                              frogAnim(COLOR1R_INIT, COLOR1G_INIT, COLOR1B_INIT, splotch1, splotch2),
                               blipEvensBrightness(0.0),
                               blipOddsBrightness(0.0),
                               blipEvens(),
                               blipOdds(),
+                              startOfAnim(0),
                               blipEvenLast(0),
                               blipOddLast(0),
                               blipEvenNext(0),
@@ -43,26 +43,9 @@ ClearAnimation::ClearAnimation(Adafruit_NeoPixel &strip, strip_segments &segment
                               thunderBrightness(1.0),
                               thunder(),
                               fadeBrightness(1.0),
-                              fadeOut() {
-
-  // Don't change anything initially
-  splotch1RTl.addTo(splotch1[0], COLOR1R_INIT, 22806, Tween::SINE, Tween::INOUT);
-  splotch1GTl.addTo(splotch1[1], COLOR1G_INIT, 22806, Tween::SINE, Tween::INOUT);
-  splotch1BTl.addTo(splotch1[2], COLOR1B_INIT, 22806, Tween::SINE, Tween::INOUT);
-
-  splotch2RTl.addTo(splotch2[0], COLOR1R_INIT, 22806, Tween::SINE, Tween::INOUT);
-  splotch2GTl.addTo(splotch2[1], COLOR1G_INIT, 22806, Tween::SINE, Tween::INOUT);
-  splotch2BTl.addTo(splotch2[2], COLOR1B_INIT, 22806, Tween::SINE, Tween::INOUT);
-
-  // blue splotch roughly rgb:  23.9, 31.2, 36.6
-  splotch1RTl.addTo(splotch1[0], 23.9 * 3, 5000, Tween::SINE, Tween::INOUT);
-  splotch1GTl.addTo(splotch1[1], 31.2 * 3, 5000, Tween::SINE, Tween::INOUT);
-  splotch1BTl.addTo(splotch1[2], 36.6 * 3, 5000, Tween::SINE, Tween::INOUT);
-
-  // yellow splotches roughly rgb: 62.4, 54.3, 33.7
-  splotch2RTl.addTo(splotch2[0], 62.4 * 3, 5000, Tween::SINE, Tween::INOUT);
-  splotch2GTl.addTo(splotch2[1], 54.3 * 3, 5000, Tween::SINE, Tween::INOUT);
-  splotch2BTl.addTo(splotch2[2], 33.7 * 3, 5000, Tween::SINE, Tween::INOUT);
+                              fadeOut(),
+                              frog1Played{false, false, false},
+                              frog2Played{false, false, false} {
 
   blipEvens.addTo(blipEvensBrightness, 1.75, 35, Tween::SINE, Tween::INOUT);
   blipEvens.addTo(blipEvensBrightness, 1, 100, Tween::SINE, Tween::INOUT);
@@ -95,14 +78,15 @@ void ClearAnimation::start() {
   splotch2[1] = COLOR2G_INIT;
   splotch2[2] = COLOR2B_INIT;
 
-  splotch1RTl.restartFrom(millis());
-  splotch1GTl.restartFrom(millis());
-  splotch1BTl.restartFrom(millis());
+  startOfAnim = millis();
 
-  splotch2RTl.restartFrom(millis());
-  splotch2GTl.restartFrom(millis());
-  splotch2BTl.restartFrom(millis());
+  frog1Played[0] = false;
+  frog1Played[1] = false;
+  frog1Played[2] = false;
 
+  frog2Played[0] = false;
+  frog2Played[1] = false;
+  frog2Played[2] = false;
 
   blipEvensBrightness = 1.0;
   blipOddsBrightness = 1.0;
@@ -127,13 +111,35 @@ void ClearAnimation::update() {
 
   const unsigned long now = millis();
 
-  splotch1RTl.update(now);
-  splotch1GTl.update(now);
-  splotch1BTl.update(now);
+  const unsigned long duration = now - startOfAnim;
 
-  splotch2RTl.update(now);
-  splotch2GTl.update(now);
-  splotch2BTl.update(now);
+  // Frog 1 Animation
+  // Check in order of LARGEST duration first to keep conditionals simple
+  if (duration >= 26375 && frog1Played[2] == false) {
+    frog1Played[2] = true;
+    frogAnim.startFrog1Song3();
+  } else if (duration >= 11077 && frog1Played[1] == false) {
+    frog1Played[1] = true;
+    frogAnim.startFrog1Song2();
+  } else if (duration >= 2278 && frog1Played[0] == false) {
+    frog1Played[0] = true;
+    frogAnim.startFrog1Song1();
+  }
+
+  // Frog 2 animations
+  // Check in order of LARGEST duration first to keep conditionals simple
+  if (duration >= 29814 && frog2Played[2] == false) {
+    frog2Played[2] = true;
+    frogAnim.startFrog2Song3();
+  } else if (duration >= 16854 && frog2Played[1] == false) {
+    frog2Played[1] = true;
+    frogAnim.startFrog2Song2();
+  } else if (duration >= 8678 && frog2Played[0] == false) {
+    frog2Played[0] = true;
+    frogAnim.startFrog2Song1();
+  }
+
+  frogAnim.update();
 
   if (now >= blipEvenNext) {
     blipEvens.restartFrom(now);
