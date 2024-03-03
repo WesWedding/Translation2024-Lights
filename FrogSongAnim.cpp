@@ -1,9 +1,9 @@
 #include "FrogSongAnim.h"
 #include "Arduino.h"
 
-#define BLUE_FROG_R 23.9
-#define BLUE_FROG_G 31.2
-#define BLUE_FROG_B 66.6
+#define BLUE_FROG_R 28.9
+#define BLUE_FROG_G 36.2
+#define BLUE_FROG_B 55.6
 
 #define YELLOW_FROG_R 72.4
 #define YELLOW_FROG_G 64.3
