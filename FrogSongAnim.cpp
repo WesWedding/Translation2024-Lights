@@ -5,8 +5,8 @@
 #define BLUE_FROG_G 31.2
 #define BLUE_FROG_B 66.6
 
-#define YELLOW_FROG_R 62.4
-#define YELLOW_FROG_G 54.3
+#define YELLOW_FROG_R 72.4
+#define YELLOW_FROG_G 64.3
 #define YELLOW_FROG_B 33.7
 
 FrogSongAnim::FrogSongAnim(short int r, short int g, short int b, float (&frog1RGB)[3], float (&frog2RGB)[3]):
@@ -61,18 +61,18 @@ FrogSongAnim::FrogSongAnim(short int r, short int g, short int b, float (&frog1R
   frog1Song3G.addTo(frog1RGB[1], BLUE_FROG_G * 3, 1000, Tween::SINE, Tween::INOUT);
   frog1Song3B.addTo(frog1RGB[2], BLUE_FROG_B * 3, 1000, Tween::SINE, Tween::INOUT);
   // Total song duration: 4087ms (minus ramp up/down).
-  frog1Song3R.addTo(frog1RGB[0], BLUE_FROG_R * 3, 2087);
-  frog1Song3G.addTo(frog1RGB[1], BLUE_FROG_G * 3, 2087);
-  frog1Song3B.addTo(frog1RGB[2], BLUE_FROG_B * 3, 2087);
+  frog1Song3R.addTo(frog1RGB[0], BLUE_FROG_R * 3, 3087);
+  frog1Song3G.addTo(frog1RGB[1], BLUE_FROG_G * 3, 3087);
+  frog1Song3B.addTo(frog1RGB[2], BLUE_FROG_B * 3, 3087);
   frog1Song3R.addTo(frog1RGB[0], baselineR, 1000, Tween::SINE, Tween::INOUT);
   frog1Song3G.addTo(frog1RGB[1], baselineG, 1000, Tween::SINE, Tween::INOUT);
   frog1Song3B.addTo(frog1RGB[2], baselineB, 1000, Tween::SINE, Tween::INOUT);
 
   // Frog 2!
 
-  frog2Song1R.addTo(frog2RGB[0], YELLOW_FROG_R * 3, 100, Tween::SINE, Tween::INOUT);
-  frog2Song1G.addTo(frog2RGB[1], YELLOW_FROG_G * 3, 100, Tween::SINE, Tween::INOUT);
-  frog2Song1B.addTo(frog2RGB[2], YELLOW_FROG_B * 3, 100, Tween::SINE, Tween::INOUT);
+  frog2Song1R.addTo(frog2RGB[0], YELLOW_FROG_R * 3, 1000, Tween::SINE, Tween::INOUT);
+  frog2Song1G.addTo(frog2RGB[1], YELLOW_FROG_G * 3, 1000, Tween::SINE, Tween::INOUT);
+  frog2Song1B.addTo(frog2RGB[2], YELLOW_FROG_B * 3, 1000, Tween::SINE, Tween::INOUT);
   // Total song duration: 2141ms (minus ramp up/down).
   frog2Song1R.addTo(frog2RGB[0], YELLOW_FROG_R * 3, 1741);
   frog2Song1G.addTo(frog2RGB[1], YELLOW_FROG_G * 3, 1741);
@@ -85,9 +85,9 @@ FrogSongAnim::FrogSongAnim(short int r, short int g, short int b, float (&frog1R
   frog2Song2G.addTo(frog2RGB[1], YELLOW_FROG_G * 3, 500, Tween::SINE, Tween::INOUT);
   frog2Song2B.addTo(frog2RGB[2], YELLOW_FROG_B * 3, 500, Tween::SINE, Tween::INOUT);
   // Total song duration: 7425ms (minus ramp up/down).
-  frog2Song2R.addTo(frog2RGB[0], YELLOW_FROG_R * 3, 5925);
-  frog2Song2G.addTo(frog2RGB[1], YELLOW_FROG_G * 3, 5925);
-  frog2Song2B.addTo(frog2RGB[2], YELLOW_FROG_B * 3, 5925);
+  frog2Song2R.addTo(frog2RGB[0], YELLOW_FROG_R * 3, 6825);
+  frog2Song2G.addTo(frog2RGB[1], YELLOW_FROG_G * 3, 6825);
+  frog2Song2B.addTo(frog2RGB[2], YELLOW_FROG_B * 3, 6825);
   frog2Song2R.addTo(frog2RGB[0], baselineR, 1000, Tween::SINE, Tween::INOUT);
   frog2Song2G.addTo(frog2RGB[1], baselineG, 1000, Tween::SINE, Tween::INOUT);
   frog2Song2B.addTo(frog2RGB[2], baselineB, 1000, Tween::SINE, Tween::INOUT);
@@ -96,9 +96,9 @@ FrogSongAnim::FrogSongAnim(short int r, short int g, short int b, float (&frog1R
   frog2Song3G.addTo(frog2RGB[1], YELLOW_FROG_G * 3, 500, Tween::SINE, Tween::INOUT);
   frog2Song3B.addTo(frog2RGB[2], YELLOW_FROG_B * 3, 500, Tween::SINE, Tween::INOUT);
   // Total song duration: 5352ms (minus ramp up/down).
-  frog2Song3R.addTo(frog2RGB[0], YELLOW_FROG_R * 3, 3752);
-  frog2Song3G.addTo(frog2RGB[1], YELLOW_FROG_G * 3, 3752);
-  frog2Song3B.addTo(frog2RGB[2], YELLOW_FROG_B * 3, 3752);
+  frog2Song3R.addTo(frog2RGB[0], YELLOW_FROG_R * 3, 4252);
+  frog2Song3G.addTo(frog2RGB[1], YELLOW_FROG_G * 3, 4252);
+  frog2Song3B.addTo(frog2RGB[2], YELLOW_FROG_B * 3, 4252);
   frog2Song3R.addTo(frog2RGB[0], baselineR, 1000, Tween::SINE, Tween::INOUT);
   frog2Song3G.addTo(frog2RGB[1], baselineG, 1000, Tween::SINE, Tween::INOUT);
   frog2Song3B.addTo(frog2RGB[2], baselineB, 1000, Tween::SINE, Tween::INOUT);
