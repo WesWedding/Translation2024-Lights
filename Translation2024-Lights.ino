@@ -29,10 +29,18 @@ Timeline state2;
 Timeline state3;
 
 // Define the "areas" on the strip that have specific animations.
-#define STRIP_SEG1_START 0
-#define STRIP_SEG1_END   5
-#define STRIP_SEG2_START 7
-#define STRIP_SEG2_END   12
+#if defined(DEV_ENV)
+  #define STRIP_SEG1_START 0
+  #define STRIP_SEG1_END   5
+  #define STRIP_SEG2_START 7
+  #define STRIP_SEG2_END   12
+#else
+  #define STRIP_SEG1_START 0
+  #define STRIP_SEG1_END   30
+  #define STRIP_SEG2_START 40
+  #define STRIP_SEG2_END   60
+#endif
+
 
 #include "StripSegments.h"
 strip_segments stripSegments = {
