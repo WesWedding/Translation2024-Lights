@@ -162,39 +162,33 @@ void ClearAnimation::update() {
 
   strip.clear();
 
-  // Add "splotches" of color, repeating every 10 pixels.
-  // 0 = blue, 1= white, 2 = yellow
-  const short int colorLookup[10] = {0, 0, 0, 0, 1, 2, 2, 2, 2, 1};
   const uint16_t numLeds = strip.numPixels();
 
   for (int i = 0; i <= numLeds; i++) {
-    const short int currentSpot = i % 10; // 10 is the size of colorLookup array
-
     // Grab the brightness from either the evens or odds depending on... well, oddness or evenness.
     const float &blipBrightness = (i % 2 == 0) ? blipEvensBrightness : blipOddsBrightness;
 
     uint32_t color = 4294967295;
-    if (colorLookup[currentSpot] == 0) {
+    if (i >= segments.firstArea.first && i <= segments.firstArea.last) {
       color = strip.Color(
         min(254.0f, splotch1[0] * blipBrightness * thunderBrightness * fadeBrightness), 
         min(254.0f, splotch1[1] * blipBrightness * thunderBrightness * fadeBrightness),
         min(254.0f, splotch1[2] * blipBrightness * thunderBrightness * fadeBrightness)
       );
-    } else if (colorLookup[currentSpot] == 1) {
-      color = strip.Color(
-        min(254.0f, COLOR1R_INIT  * blipBrightness * thunderBrightness * fadeBrightness), 
-        min(254.0f, COLOR1G_INIT  * blipBrightness * thunderBrightness * fadeBrightness), 
-        min(254.0f, COLOR1B_INIT  * blipBrightness * thunderBrightness * fadeBrightness)
-      );
-    } else if (colorLookup[currentSpot] == 2 ) {
+    } else if (i >= segments.secondArea.first && i <= segments.secondArea.last) {
       color = strip.Color(
         min(254.0f, splotch2[0]  * blipBrightness * thunderBrightness * fadeBrightness), 
         min(254.0f, splotch2[1]  * blipBrightness * thunderBrightness * fadeBrightness), 
         min(254.0f, splotch2[2]  * blipBrightness * thunderBrightness * fadeBrightness)
       );
+    } else {
+      color = strip.Color(
+        min(254.0f, COLOR1R_INIT  * blipBrightness * thunderBrightness * fadeBrightness), 
+        min(254.0f, COLOR1G_INIT  * blipBrightness * thunderBrightness * fadeBrightness), 
+        min(254.0f, COLOR1B_INIT  * blipBrightness * thunderBrightness * fadeBrightness)
+      );
     }
     strip.setPixelColor(i, strip.gamma32(color));
   }
-
   strip.show();
 }
