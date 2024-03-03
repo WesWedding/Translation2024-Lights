@@ -36,8 +36,8 @@ Timeline state3;
   #define STRIP_SEG2_END   12
 #else
   #define STRIP_SEG1_START 0
-  #define STRIP_SEG1_END   30
-  #define STRIP_SEG2_START 40
+  #define STRIP_SEG1_END   20
+  #define STRIP_SEG2_START 49
   #define STRIP_SEG2_END   60
 #endif
 
