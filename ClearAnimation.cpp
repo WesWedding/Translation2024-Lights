@@ -78,6 +78,8 @@ void ClearAnimation::start() {
   splotch2[1] = COLOR2G_INIT;
   splotch2[2] = COLOR2B_INIT;
 
+  frogAnim.reset();
+
   startOfAnim = millis();
 
   frog1Played[0] = false;

@@ -24,6 +24,8 @@ class FrogSongAnim {
     void startFrog2Song2();
     void startFrog2Song3();
 
+    void reset();
+
     Song getCurrentFrog1Song();
   private:
     

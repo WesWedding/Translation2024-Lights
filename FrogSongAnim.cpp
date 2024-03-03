@@ -3,7 +3,7 @@
 
 #define BLUE_FROG_R 23.9
 #define BLUE_FROG_G 31.2
-#define BLUE_FROG_B 36.6
+#define BLUE_FROG_B 66.6
 
 #define YELLOW_FROG_R 62.4
 #define YELLOW_FROG_G 54.3
@@ -151,6 +151,11 @@ void FrogSongAnim::startFrog2Song3() {
   frog2Song3R.restartFrom(millis());
   frog2Song3G.restartFrom(millis());
   frog2Song3B.restartFrom(millis());
+}
+
+void FrogSongAnim::reset() {
+  currentFrog1Song = NONE;
+  currentFrog2Song = NONE;
 }
 
 Song FrogSongAnim::getCurrentFrog1Song() {
