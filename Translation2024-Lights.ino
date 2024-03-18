@@ -24,10 +24,6 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 #include <TweenDuino.h>
 using namespace TweenDuino;
 
-Timeline state1;
-Timeline state2;
-Timeline state3;
-
 // Define the "areas" on the strip that have specific animations.
 #if defined(DEV_ENV)
   #define STRIP_SEG1_START 0
@@ -64,21 +60,15 @@ void setup() {
   strip.begin(); 
   strip.show();
   strip.setBrightness(BRIGHTNESS);
-  state1.addTo(ledPosition, LED_COUNT, 3000);
-  state2.addTo(ledPosition, LED_COUNT, 10000);
-  state3.addTo(ledPosition, LED_COUNT, 20000);
 }
 
 
 // Variables relevant to the loop.  Nice to have them down here, nearer the logic they're used in.
 bool stateChanged = false;
 char touchState;
-Timeline *currentTl = &state1;
 void (*doBehavior)(void) = doStage0Behavior;
 
 void loop() {
-  unsigned long int now = millis();
-  currentTl->update(now);
   using periodic = esp8266::polledTimeout::periodicMs;
   static periodic nextPing(100);
 
@@ -109,21 +99,18 @@ void loop() {
 
   switch(touchState) {
     case '0':
-      currentTl = &state1;
       touchedAnim.stop();
       clearAnim.stop();
       idleAnim.start();
       doBehavior = doStage0Behavior;
       break;
     case '1':
-      currentTl = &state2;
       idleAnim.stop();
       clearAnim.stop();
       touchedAnim.start();
       doBehavior = doStage1Behavior;
       break;
     case '2':
-      currentTl = &state3;
       idleAnim.stop();
       touchedAnim.stop();
       clearAnim.start();
@@ -140,7 +127,6 @@ void loop() {
   }
   stateChanged = false;
   ledPosition = 1;
-  currentTl->restartFrom(now);
   doBehavior();
 }
 
