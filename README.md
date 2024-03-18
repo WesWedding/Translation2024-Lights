@@ -10,10 +10,10 @@ The lionshare of the codebase is devoted to animation of a single LED strand tha
 
 The child device reports its internal state with a single char, one of the following:
 
-- "0": The "attract" or "idle" waiting state.  This will gently pulse/throb the first segment of LEDs, positioned around a touch area used to activate the artwork.
-- "1": The "single touch" state, which pulses a light toward the beginning of LED segment 2 in order to encourage a 2nd touch to happen in an appropriate region of the ceramic work.
-- "2": The "fully active" state, which plays a long 30+ second animation that matches a mp3 audio file played by the Touch device.  Blips of random light matches the gentle rainfall, while blue and gold colors fade in and out to match 2 frogs that are calling out to eachother for the duration of the audio file.  It all culminates in a brilliant flash of light to match a rolling thunder that finishes the audio file.
-- "3": Pretty much a brief "do nothing" state entered into by the touch device, transitional between more active states.
+  - "0": The "attract" or "idle" waiting state.  This will gently pulse/throb the first segment of LEDs, positioned around a touch area used to activate the artwork.
+  - "1": The "single touch" state, which pulses a light toward the beginning of LED segment 2 in order to encourage a 2nd touch to happen in an appropriate region of the ceramic work.
+  - "2": The "fully active" state, which plays a long 30+ second animation that matches a mp3 audio file played by the Touch device.  Blips of random light matches the gentle rainfall, while blue and gold colors fade in and out to match 2 frogs that are calling out to eachother for the duration of the audio file.  It all culminates in a brilliant flash of light to match a rolling thunder that finishes the audio file.
+  - "3": Pretty much a brief "do nothing" state entered into by the touch device, transitional between more active states.
 
 ## Usage
 Without modifications, this codebase assumes that there is a a Neopixel strip wired to a Huzzah on digital pin 12.  This neopixel strip is assumed to be 60 pixels long.
@@ -62,4 +62,10 @@ This library enables the use of "Tweens" and series of Tweens called Timelines, 
 
 ### Easing
 Tweenduino depends heavily on the Easing library.  Easings are the magic that drive tweens, and help determine the "curve" a value change follows between its current value and final value.  Get it via the Arduino Library Manager or Github here: https://github.com/hideakitai/Easing.
+
+## Credits
+This driver is written by Weston Wedding.
+
+## License
+This driver is free software; you can redistribute it and/or modify it under the terms of the the MIT License.  For full details, check out the [COPYING](COPYING.md) file in this sourcecode or the explanation of [MIT License here](https://tlo.mit.edu/understand-ip/exploring-mit-open-source-license-comprehensive-guide).
 
