@@ -6,7 +6,7 @@ This is the code that drives the Lights in Tabitha Darrah and Weston Wedding's 2
 This code requires another device running the sister code: [Sample no. 43 (Touch Driver)](https://github.com/WesWedding/Translation2024-Touch) or it won't really do much.
 
 ## Summary of Behavior
-The lionshare of the codebase is devoted to animation of a single LED strand that is divided into several logical segments that animate differently.  An I2C child device is polled many times a second in order to evaluate the child's current state of activity, and as the child's state changes in response to user touches this Lights device will play an appropriate extended lights animation.
+The lion's share of the codebase is devoted to animation of a single LED strand that is divided into several logical segments that animate differently.  An I2C child device is polled many times a second in order to evaluate the child's current state of activity, and as the child's state changes in response to user touches this Lights device will play an appropriate extended lights animation.
 
 The child device reports its internal state with a single char, one of the following:
 
@@ -16,15 +16,16 @@ The child device reports its internal state with a single char, one of the follo
   - "3": Pretty much a brief "do nothing" state entered into by the touch device, transitional between more active states.
 
 ## Usage
-Without modifications, this codebase assumes that there is a a Neopixel strip wired to a Huzzah on digital pin 12.  This neopixel strip is assumed to be 60 pixels long.
+Without modifications, this codebase assumes that there is a a NeoPixel strip wired to a Huzzah on digital pin 12.  This NeoPixel strip is assumed to be 60 pixels long.
 
-### Neopixel strip length (LED count)
+### NeoPixel strip length (LED count)
 
 This code was developed using a much smaller strip of pixels; 16 LEDs.  This is hidden behind a preprocessor definition, `DEV_ENV`
 
 If `#define DEV_ENV` is un-commented, this alternative development environment configuration is used instead.  This reduced the amount of lines the remote ceramics artist would have to maintain on her own, and have to keep track of every time they pulled a code update.
 
 Modify the following defines to match your actual LED counts and corresponding "segments" to animate.
+
 `#define LED_COUNT  16`
 
 ```cpp
@@ -42,8 +43,8 @@ This project expects to run on a Feather Huzzah or equivalent; digital pins used
 
 You may need to get additional drivers in order to use this hardware, as well as the ESP8266 package.  See Adafruit's [Using the Arduino IDE page](https://learn.adafruit.com/adafruit-feather-huzzah-esp8266/using-arduino-ide) for more information.
 
-### [Adafruit Neopixels](https://www.adafruit.com/category/168)
-Any kind of Neopixel string will work; the library is maintained and updated by Adafruit often.  The code assumes a GRB Neopixel string, you may need to update the code to reflect your NeoPixels of choice (e.g. `Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800)`).
+### [Adafruit NeoPixels](https://www.adafruit.com/category/168)
+Any kind of NeoPixel string will work; the library is maintained and updated by Adafruit often.  The code assumes a GRB NeoPixel string, you may need to update the code to reflect your NeoPixels of choice (e.g. `Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800)`).
 
 ### I2C bi-directional logic level shifter
 Any I2C-friendly bi-directional logic level shifter is required (assuming the Touch component is 5V logic like ours).  Either the [Adafruit BSS1388](https://www.adafruit.com/product/757) or [Sparkfun BOB-12009](https://www.sparkfun.com/products/12009) worked great during implemtation! 
@@ -52,9 +53,9 @@ Any I2C-friendly bi-directional logic level shifter is required (assuming the To
 In addition to using your IDE of choice (VSCode, Arduino IDE 2.0, etc) you'll need some libraries in order to successfully compile.  One of the libraries is not currently on the Arduino Library Manager (yet), and will require some additional steps.
 
 ### ESP8266 Board Package
-This code uses a PolledTimeout available via the ESP8266 board library.  This class is available when compiling for the Adafruit Feather HUZZAH, but would require a replacement if you are trying to compile for another board.
+This code uses a PolledTimeout class, available via the ESP8266 board library.  This class is available when compiling for the Adafruit Feather HUZZAH, but would require a replacement if you are trying to compile for another board.
 
-### Adafruit_Neopixel
+### Adafruit_NeoPixel
 The library to make the NeoPixels do their thing; not much explanation required.  Get it via the Arduino Library Manager or Github here: https://github.com/adafruit/Adafruit_NeoPixel.
 
 ### Tweenduino (manual install required)
