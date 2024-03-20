@@ -64,6 +64,10 @@ This library enables the use of "Tweens" and series of Tweens called Timelines, 
 ### Easing
 Tweenduino depends heavily on the Easing library.  Easings are the magic that drive tweens, and help determine the "curve" a value change follows between its current value and final value.  Get it via the Arduino Library Manager or Github here: https://github.com/hideakitai/Easing.
 
+### Wire
+
+I2C with the Touch board is a core feature of this driver, which requires the Wire library.
+
 ## Credits
 This driver is written by Weston Wedding.
 
